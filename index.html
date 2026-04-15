@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PotterDex - Buscador de Personajes</title>
+    <title>PotterDex - El Directorio Mágico</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <h1>Directorio Mágico de Hogwarts</h1>
+        <div class="logo">
+            <h1>PotterDex</h1>
+            <p>Directorio Oficial de Hogwarts</p>
+        </div>
         <div class="controles">
             <input type="text" id="buscador" placeholder="Buscar nombre o actor...">
             
             <select id="filtroCasa">
-                <option value="">Todas las casas</option>
+                <option value="">Todas las Casas</option>
                 <option value="Gryffindor">Gryffindor</option>
                 <option value="Hufflepuff">Hufflepuff</option>
                 <option value="Ravenclaw">Ravenclaw</option>
@@ -25,6 +28,14 @@
 
     <main id="contenedor">
         </main>
+
+    <div id="modalMagico" class="modal-overlay">
+        <div class="modal-contenido">
+            <span id="cerrarModal" class="boton-cerrar">&times;</span>
+            <div id="detallePersonaje">
+                </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
