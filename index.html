@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HP API - Fichas de Personajes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Directorio Mágico de Harry Potter</h1>
+        <div class="controles">
+            <input type="text" id="buscador" placeholder="Buscar por nombre o actor...">
+            
+            <select id="filtroCasa">
+                <option value="">Todas las casas</option>
+                <option value="Gryffindor">Gryffindor</option>
+                <option value="Hufflepuff">Hufflepuff</option>
+                <option value="Ravenclaw">Ravenclaw</option>
+                <option value="Slytherin">Slytherin</option>
+            </select>
+        </div>
+    </header>
+
+    <main id="contenedor">
+        <p class="cargando">Cargando personajes del mundo mágico...</p>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
