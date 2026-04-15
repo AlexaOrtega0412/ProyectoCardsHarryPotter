@@ -1,8 +1,9 @@
+* { box-sizing: border-box; }
+
 body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f0f2f5;
-    margin: 0;
-    padding: 0;
+    margin: 0; padding: 0;
     color: #333;
 }
 
@@ -11,43 +12,59 @@ header {
     color: white;
     padding: 30px 20px;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
 }
 
-.logo h1 { margin: 0; font-size: 2.5rem; letter-spacing: 2px; color: #ffc107; }
-.logo p { margin: 5px 0 20px; opacity: 0.8; }
+.logo h1 {
+    margin: 0;
+    font-size: 2.8rem;
+    color: #ffc107;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.logo p { margin: 5px 0 0; opacity: 0.7; font-style: italic; }
 
 .controles {
+    margin-top: 25px;
     display: flex;
     justify-content: center;
     gap: 15px;
+    flex-wrap: wrap;
 }
 
 input, select {
-    padding: 12px 15px;
-    border: none;
+    padding: 12px 20px;
     border-radius: 25px;
+    border: none;
     font-size: 1rem;
     outline: none;
+    transition: all 0.3s;
+}
+
+input:focus, select:focus {
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
 }
 
 #contenedor {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 30px;
     padding: 40px;
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
 .ficha {
     background: white;
     border-radius: 15px;
-    overflow: hidden;
+    overflow: hidden; 
     box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
-    border-top: 8px solid #ccc;
+    border-top: 10px solid #ccc; 
+    display: flex;
+    flex-direction: column;
 }
 
 .ficha:hover {
@@ -57,15 +74,29 @@ input, select {
 
 .ficha img {
     width: 100%;
-    height: 320px;
+    height: 340px;
     object-fit: cover;
+    background-color: #eee;
 }
 
-.info-basica { padding: 20px; text-align: center; }
-.info-basica h3 { margin: 0 0 10px; font-size: 1.3rem; }
-.info-basica p { margin: 5px 0; color: #666; font-size: 0.9rem; }
+.info-basica {
+    padding: 20px;
+    text-align: center;
+    flex-grow: 1;
+}
 
-/* --- Colores por Casa --- */
+.info-basica h3 { 
+    margin: 0 0 10px; 
+    font-size: 1.4rem; 
+    color: #1a1a1a; 
+}
+.info-basica p { 
+    margin: 5px 0; 
+    color: #666; 
+    font-size: 0.95rem; 
+}
+
+
 .Gryffindor { border-top-color: #740001; }
 .Gryffindor h3 { color: #740001; }
 
@@ -80,14 +111,14 @@ input, select {
 
 
 .modal-overlay {
-    display: none;
+    display: none; 
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85);
-    z-index: 1000;
+    background: rgba(0,0,0,0.85); 
+    z-index: 2000; 
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(8px); 
 }
 
 .modal-contenido {
@@ -96,34 +127,95 @@ input, select {
     max-width: 600px;
     border-radius: 20px;
     padding: 40px;
-    position: relative;
+    position: relative; 
+    
+    
+    overflow: visible;  
+    z-index: 2001;       
+    
     animation: zoomIn 0.3s ease;
 }
 
 @keyframes zoomIn {
-    from { transform: scale(0.5); opacity: 0; }
+    from { transform: scale(0.6); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
 
 .boton-cerrar {
     position: absolute;
-    top: 15px; right: 20px;
+    top: 15px; right: 25px;
     font-size: 35px;
     cursor: pointer;
     color: #999;
+    transition: color 0.3s;
 }
+.boton-cerrar:hover { 
+    color: #333; 
+}
+
+#detallePersonaje h2 { 
+    margin-top: 0; 
+    color: #1a1a1a; 
+    border-bottom: 2px solid #eee; 
+    padding-bottom: 10px; }
 
 .detalle-flex {
     display: flex;
     gap: 30px;
+    margin-top: 25px;
     align-items: flex-start;
 }
 
-.foto-detalle { width: 200px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.foto-detalle {
+    width: 200px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    object-fit: cover;
+}
+
 .lista-datos { list-style: none; padding: 0; margin: 0; flex: 1; }
 .lista-datos li { 
-    padding: 10px 0; 
+    padding: 12px 0; 
     border-bottom: 1px solid #eee; 
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+    display: flex;
+    justify-content: space-between;
 }
-.lista-datos strong { color: #333; }
+.lista-datos li strong { color: #555; }
+.lista-datos li span { color: #1a1a1a; font-weight: 600; text-align: right; }
+
+
+.chispa {
+    position: absolute;
+    width: 8px; 
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none; 
+    opacity: 0;
+    
+    z-index: 9999; 
+    
+    animation: estallidoMágico 0.8s ease-out forwards;
+}
+
+
+.chispa-oro {
+    background: #ffc107;
+    box-shadow: 0 0 12px #ffc107, 0 0 20px rgba(255, 193, 7, 0.5);
+}
+
+.chispa-plata {
+    background: #e0e0e0;
+    box-shadow: 0 0 12px #e0e0e0, 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes estallidoMágico {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
+}
