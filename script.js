@@ -2,73 +2,63 @@ const contenedor = document.getElementById('contenedor');
 const buscador = document.getElementById('buscador');
 const filtroCasa = document.getElementById('filtroCasa');
 
-let todosLosPersonajes = [];
+let personajes = [];
 const IMG_DEFAULT = "https://via.placeholder.com/300x400?text=Imagen+No+Disponible";
 
-// 1. Consumir la API
+// Cargar datos de la API
 async function obtenerPersonajes() {
     try {
-        const respuesta = await fetch('https://hp-api.onrender.com/api/characters');
-        todosLosPersonajes = await respuesta.json();
-        renderizarFichas(todosLosPersonajes);
-    } catch (error) {
-        contenedor.innerHTML = "<p>Error al conectar con el Ministerio de Magia.</p>";
-        console.error(error);
+        const res = await fetch('https://hp-api.onrender.com/api/characters');
+        personajes = await res.json();
+        mostrarFichas(personajes);
+    } catch (err) {
+        contenedor.innerHTML = "<h2>Error al cargar los datos...</h2>";
     }
 }
 
-// 2. Crear las fichas en el HTML
-function renderizarFichas(lista) {
-    contenedor.innerHTML = ""; // Limpiar antes de mostrar
+// Renderizar las fichas en el DOM
+function mostrarFichas(lista) {
+    contenedor.innerHTML = "";
     
-    if (lista.length === 0) {
-        contenedor.innerHTML = "<p>No se encontraron coincidencias.</p>";
-        return;
-    }
-
-    lista.forEach(personaje => {
-        const fichaDiv = document.createElement('article');
-        fichaDiv.className = 'ficha';
+    lista.forEach(p => {
+        const casaClase = p.house ? p.house : "Ninguna";
+        const foto = p.image ? p.image : IMG_DEFAULT;
         
-        // Validación de imagen por defecto
-        const foto = personaje.image ? personaje.image : IMG_DEFAULT;
-
-        fichaDiv.innerHTML = `
-            <img src="${foto}" alt="${personaje.name}">
+        const card = document.createElement('article');
+        card.className = `ficha ${casaClase}`;
+        
+        card.innerHTML = `
+            <img src="${foto}" alt="${p.name}">
             <div class="info">
-                <h3>${personaje.name}</h3>
-                <p><span class="label">Casa:</span> ${personaje.house || 'Ninguna'}</p>
-                <p><span class="label">Actor:</span> ${personaje.actor || 'Desconocido'}</p>
-                <p><span class="label">Especie:</span> ${personaje.species}</p>
-                <p><span class="label">Género:</span> ${personaje.gender}</p>
+                <h3>${p.name}</h3>
+                <p><span class="label">Casa:</span> ${p.house || 'Ninguna'}</p>
+                <p><span class="label">Actor:</span> ${p.actor || 'N/A'}</p>
+                <p><span class="label">Especie:</span> ${p.species}</p>
             </div>
         `;
-        contenedor.appendChild(fichaDiv);
+        contenedor.appendChild(card);
     });
 }
 
-// 3. Función de filtrado dinámico
-function filtrar() {
-    const textoBusqueda = buscador.value.toLowerCase();
-    const casaSeleccionada = filtroCasa.value;
+// Lógica de Filtros (Texto + Casa)
+function aplicarFiltros() {
+    const texto = buscador.value.toLowerCase();
+    const casa = filtroCasa.value;
 
-    const filtrados = todosLosPersonajes.filter(p => {
-        // Filtro por texto (Nombre o Actor)
-        const coincideTexto = p.name.toLowerCase().includes(textoBusqueda) || 
-                             p.actor.toLowerCase().includes(textoBusqueda);
+    const filtrados = personajes.filter(p => {
+        const coincideNombre = p.name.toLowerCase().includes(texto) || 
+                               p.actor.toLowerCase().includes(texto);
+        const coincideCasa = casa === "" || p.house === casa;
         
-        // Filtro por Casa
-        const coincideCasa = casaSeleccionada === "" || p.house === casaSeleccionada;
-
-        return coincideTexto && coincideCasa;
+        return coincideNombre && coincideCasa;
     });
 
-    renderizarFichas(filtrados);
+    mostrarFichas(filtrados);
 }
 
-// Eventos de escucha
-buscador.addEventListener('input', filtrar);
-filtroCasa.addEventListener('change', filtrar);
+// Listeners para búsqueda en tiempo real
+buscador.addEventListener('input', aplicarFiltros);
+filtroCasa.addEventListener('change', aplicarFiltros);
 
-// Iniciar la carga
+// Arrancar app
 obtenerPersonajes();
